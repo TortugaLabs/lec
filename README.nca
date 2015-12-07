@@ -1,0 +1,160 @@
+NCA - Network Console on Acid
+
+Installation
+------------
+
+You can use this package both to install nca on the local machine, and
+to build a binary package for installing it faster on other servers.
+
+To build and install locally:
+
+ make
+ make install
+
+To build a binary package for ease of repeated installation:
+
+ make 
+ make package
+
+The package will be built as build/nca-x.y.z.tar.gz, and can itself be
+installed with: 
+ tar -xvzf nca-x.y.z.tar.gz
+ cd nca-x.y.z
+ make install
+
+
+The 'make install' step of either of these installs 'nca' and 'ncad'
+in /sbin, or some other target directory if you've played with the
+config at the top of the Makefile.
+
+Use
+---
+
+Once installed, you can connect to the console on the local machine
+using the nca command as root.  The terminal on which you are running
+nca must be at least as large as the console (e.g. 80x25 for a
+standard console).  
+
+ # nca
+
+You'll be connected directly to the first virtual terminal (tty1).
+You can switch between virtual terminals from nca's menu, which will
+pop up when you hit CTRL-a.  From the menu '1' to '9' take you to the
+corresponding tty, and '+' and '-' cycle up and down through the
+ttys.
+
+You can also hit 's' for a shell (handy if you've connected via ncad
+to a machine that's having trouble booting, see below for more
+details), and 'r' for a hard-reboot. 'q' quits nca.
+
+
+Whilst this is fun, and occasionally useful for letting you see what
+sort of guff is being spewed to the console of a misbehaving server,
+the real power of nca comes from ncad, which is a copy of sshd hacked
+so that it will run without any writable filesystems, and run nca
+instead of a normal shell when someone logs in.  This allows ncad to
+be started very early in the boot sequence (in practice, immediately
+after the kernel has mounted the root filesystem read-only);
+permitting you to log in to a remote machine's console whilst it is
+booting up, and before it has even started checking its filesystems.
+
+Running ncad
+------------
+
+When run, ncad forks into the background and starts listening on port
+911.  It is configured through a standard sshd configuration file,
+found in /etc/nca/ncad_config.
+
+Once it's running, you may log in as normal over ssh:
+
+ $ ssh root@foo.example.com -p 911
+
+Once correctly authorised, you'll be dropped straight into nca.
+
+
+Configuring ncad to start early in the boot sequence
+----------------------------------------------------
+
+The "make install" target will install a start script for ncad as
+/etc/init.d/ncad.  Edit this script to set the default IP address,
+broadcast address, netmask and gateway for your machine.  If you need
+some modules loaded before you can bring up a network, insert these in
+the insert_networking_modules() function.
+
+You must also create a symbolic link from /etc/rcS.d/S<NN>ncad to
+/etc/init.d/ncad so that ncad is started at the appropriate point in
+your boot sequence.  The precise value for <NN> will depend on your
+preferences and distribution.  When getting ncad set up for the first
+time, it's useful to set it to start just after bootlogd (if you have
+it) so that you get a copy of any error messages it generates if
+things don't go well.
+
+
+IMPORTANT:
+
+It is assumed that you will want to run ncad before any filesystem
+other than your root filesystem has been mounted, so the "make
+install" target checks to see which libraries ncad has been linked
+against, and copies any of these that don't appear to be on the root
+filesystem into /lib.  If you'd rather this didn't happen (even though
+it will render ncad unrunnable until the necessary partitions are
+mounted), comment out the line "./fix_libs.pl" in rc/Makefile.
+rc/fix_libs.pl is the script responsible for working out which
+libraries to copy.
+
+---------------------------------------------------------------------------
+
+Authors
+-------
+
+nca was written and sshd was morphed into ncad by James McKenzie,
+inspired by 'nc', an earlier, non-ssh version written by Chris
+Lightfoot.
+
+James was too lazy^H^H^H^Hbusy to package it up himself, so Julian
+Midgley foolishly agreed to write some documentation (viz, to date,
+this README), package it and to field any correspondence it attracts.
+Please, therefore, email Julian Midgley <jtjm@xenoclast.org> with any
+questions, bug reports or suggestions you have about nca or ncad.
+
+Licence
+-------
+
+Copyright (c) 2002-2004 James McKenzie <james@fishsoup.dhs.org>,
+              2004      Julian T. J. Midgley <jtjm@xenoclast.org>
+
+nca (being everything included in this package other than the openssh
+daemon itself) is distributed under the terms of a 2-part BSD licence,
+as follows:
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+   FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+   DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+   OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+   HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+   OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+   SUCH DAMAGE.
+
+
+The licencing terms for openssh, included with nca, are described in
+the file LICENCE included in the openssh tarball.  You can will find
+this in build/openssh.X.Z.Z/LICENCE after you've built nca (or run
+"make unpack_ssh").  If you can't be bothered to read this, take it on
+trust that licence amounts to standard BSD (with and without part 3,
+for different parts of the code), with some parts under freer licences
+still.  Greater use of Poul-Henning Kemp's Beer-Ware Licence should be
+encouraged.
+

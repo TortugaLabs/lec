@@ -1,0 +1,12 @@
+Contributions to cec are welcome.  
+
+In contributing, though, please stay true to the original simplicity
+of the software.  Many open source projects suffer from the "creeping
+feature demon" phenomenon.  If you think cec needs a great new
+feature, first seriously try to think of a way to accomplish your goal
+without adding to the cec itself.
+
+Patches should be clean (to the point and easy to read) and should do
+one thing.  Send multiple patches if necessary.  Patches should be
+generated with "diff -uprN" if possible, and should be designed to be
+applied with "patch -p1".

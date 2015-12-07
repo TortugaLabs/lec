@@ -1,0 +1,45 @@
+
+The Coraid Ethernet Console (cec) is a lightweight 
+protocol for connecting two endpoints using raw 
+ethernet frames.  The communication is not secure.
+
+Cec is also the name of the client used to connect to cec servers.
+Cec will run on linux, and bsd flavors supporting bpf (including OSX).
+
+Cec also runs on Windows by using cygwin.  To compile in Windows, one
+must do so in the cygwin environment, but it can be run from the
+command prompt outside of cygwin as long as the cygwin1.dll is
+available. The winpcap library must be installed for Windows cec to
+work.  The winpcap libraries should be installed into the cygwin
+environment by following these instructions:
+
+  http://mathieu.carbou.free.fr/wiki/index.php?title=Winpcap_/_Libpcap
+
+Cec is most often tested with the gcc compiler.  By default the
+makefile is linux ready -- just run make.
+
+To compile a bsd binary, run
+
+	make PLATFORM=bsd
+
+or edit the makefile accordingly.
+
+For discussion, sign up to the aoetools mailing list.
+
+aoetools-discuss@lists.sourceforge.net
+
+---
+
+Documentation
+
+See the cec.8 manpage.  To read the manpage before installation, some
+versions of man accept a "-l" option:
+
+  man -l cec.8
+
+... while on other systems groff may be used.
+
+  groff -Tascii -mandoc cec.8 | less
+
+The CEC protocol is documented in cec.txt.
+
