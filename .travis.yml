@@ -1,6 +1,8 @@
 #
 language: c
-script: make RELNUM=1.$TRAVIS_BUILD_NUMBER OPTFLAGS=-O2 LDFLAGS=-s && make rpm
+script:
+ - make RELNUM=1.$TRAVIS_BUILD_NUMBER OPTFLAGS=-O2 LDFLAGS=-s
+ - make RELNUM=1.$TRAVIS_BUILD_NUMBER rpm
 compiler: gcc
 sudo: false
 
