@@ -1,4 +1,5 @@
 VERSION = 0.2.0
+RELNUM = 1
 #OPTFLAGS = -O2
 # We default to -g... our spec file overrides this setting anyway...
 OPTFLAGS = -g
@@ -51,8 +52,9 @@ rpm:	all
 	fpm -s dir -t rpm \
 		--name lec \
 		--version $(VERSION) \
-		--iteration 1 \
+		--iteration $(RELNUM) \
 		--license GPL,BSD2 \
+		--epoch 0 \
 		--category "System Environment/Base" \
 		--maintainer "alejandro_liu@hotmail.com" \
 		--description "Linux Ethernet Console" \
