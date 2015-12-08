@@ -45,6 +45,9 @@ distclean:
 	rm -f *.o *~ *.t $(TARGETS) core *.rpm *.tar.gz *.log log.* $(EXES)
 	rm -rf TMP
 
+genman:
+	manify -DREVISION=$(VERSION) --genman .
+
 rpm:	all
 	rm -rf TMP
 	make PREFIX=/usr DESTDIR=$$(pwd)/TMP install

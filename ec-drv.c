@@ -19,7 +19,7 @@
  *
  *++
  * = ECDRV(8)
- * :Revision: 2.0
+ * :Revision: REVISION
  * :Author: A Liu Ly
  *
  * == NAME
