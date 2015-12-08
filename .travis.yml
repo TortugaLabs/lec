@@ -1,20 +1,18 @@
 language: c
 script:
-- make RELNUM=1.$TRAVIS_BUILD_NUMBER OPTFLAGS=-O2 LDFLAGS=-s
-- make RELNUM=1.$TRAVIS_BUILD_NUMBER rpm
+ - make RELNUM=1.$TRAVIS_BUILD_NUMBER OPTFLAGS=-O2 LDFLAGS=-s
+ - make RELNUM=1.$TRAVIS_BUILD_NUMBER rpm
+ - make RELNUM=1.$TRAVIS_BUILD_NUMBER push
+ - package_cloud push aliuly/localapps/el/7 *.rpm
 compiler: gcc
 sudo: false
 before_install:
-- gem install fpm
+ - gem install fpm
+ - gem install package_cloud
+env:
+ - secure: "zZVG+4sMAKuOPgQ8PZRzxryM0oO+Xn1DKt3wfsZwJcL0aOeDA6RMB5sSAIs2uxQWl8LgpKzpKPlsIWktSu/BUntHxtTzDxYrTpN1u64YvHaRlVH64KfbP+TxnB1yEsxqnPaBanwMl/KVsElbDvLdXfdqr7jygUTNuP/0FxIUzixmk0la4V1hUvDQ+Iog6qY7u5DfNKg3ZbnrWEALAH/EN9324+sZ5nFAaqkaDtP/Mzh20SLYZS8F5hbosTCXl2lGsZqHQBnHo322IWHBCsBkRyTGGlApETQZ5xkM6TlhimH9J+dVNCRg2Xi/cEiqEqgkcM0NMSnuw+IWaHLASJy1eATzBkakreotzAIslJfexsO3fgdEguAJSTPulmWADRZUDO1DzjBRWJ7tegBj4z0Yk8rnXRqqC2IuWSFv+4nnnySG+WdUnzmey2zvtnT+YVHmQvPSm3lTBsv8NLJDNXIAkS5bQ0ulQdFUlEW37DVnL/MXlN5CRXA9uc07ufkBvuS43+/DrCqXEhjAYXU1o4o9iAVJEqCESBJW//1vNEs+UwH66NHRIRPTpbbU+SVa9Msch46wXSqkOOP5xYDJdTloyHfmeJxbfV+03IvJHY+ZlxvRXd3Y4cx4/GbOI95Gw8m8Oa31NLwIWpVD5343JLO1doh1GpYSIzhe2mHVXV7EKus="
+
 addons:
   apt:
     packages:
     - rpm
-deploy:
-  provider: packagecloud
-  repository: aliuly/localapps
-  username: aliuly
-  dist: el/7
-  skip_cleanup: true
-  token:
-    secure: NgHbUKMAC/DpBH1mxPI73FOUa6mKcch/PtO8HoFmpgmT26OMEYRmbceJWtPlrpHZwlEh9NGgv3FkU18oyfaYmtQH/T5jBzBGxslUSO9YiURI6nFcHpKkBH+hvR9MskdoI0ZGpH1HuJlCBL27mbYS4dbP/g/qqceoRbX1sBidQGM9AB6OOcENj38GwL3yWLjbxuLztKUtiteEbJpdWVWjG3iW9JcpXDmQpU1wpx7fZjIyJ+xvicL98GUGePTw9Rw+4Tdw1N7AsQKIbOu/qBOUoNcuKbYaNKxph4NYtZtaa9s5tHkeLvFcG+k04FUZnK3rj2peeXZjyXip4Lfk+InUWiFaI3j9TSoift+EKIy53HP+2+8UXodteACQzq3n9+FVMIXtWQNgQz70yKTUnjJA7XzrQCIDJnB3JAixh3kwepmI6qZK4bb0rQa1J4j1ykNEsNW4jP7ARNsKKSfj5ap1K/6NZOn1IdR+KGLtKv3StJTkqKyuBNXZOIKcoK4pKZyHY5ktVZ1Rw3DTePCh90wuye/UM148F1kgTs3oM6zygWagkj/qI3IqTAS9TnB7dkehCEdlmq0cRDDmLJRsPvWD1lytd7ilhXPl0cfTrsJv/YbfzXaBIPapuacLfXsmKwMW6ti+PQo8jsa31kxy9EdD+53i93Qvp+baN3kL/dmHMXU=
