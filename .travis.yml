@@ -2,7 +2,6 @@ language: c
 script:
  - make RELNUM=1.$TRAVIS_BUILD_NUMBER OPTFLAGS=-O2 LDFLAGS=-s
  - make RELNUM=1.$TRAVIS_BUILD_NUMBER rpm
- - make RELNUM=1.$TRAVIS_BUILD_NUMBER push
  - package_cloud push aliuly/localapps/el/7 *.rpm
 compiler: gcc
 sudo: false
