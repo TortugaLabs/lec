@@ -6,7 +6,6 @@ sudo: false
 
 before_install:
 - gem install fpm
-- fpm
 
 addons:
   apt:
