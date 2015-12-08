@@ -1,0 +1,137 @@
+'\" t
+.\"     Title: sled
+.\"    Author: A Liu Ly
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2015-12-08
+.\"    Manual: System administration
+.\"    Source: sled.c 2.0
+.\"  Language: English
+.\"
+.TH "SLED" "8" "2015\-12\-08" "sled\&.c 2\&.0" "System administration"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sled \- Serial Linux Ethernet Daemon
+.SH "SYNOPSIS"
+.sp
+sled \fI[options]\fR \fIeth\fR \fI[\-\-]\fR \fI[cmd\fR \fIcmd\fR \fIargs]\fR
+.SH "DESCRIPTION"
+.sp
+The \fBsled\fR command uses raw sockets to connect to present CEC compatible server for console access\&. All clients share the same session\&.
+.sp
+It does this by spawning a couple of process, one to manage a PTY and another to manage an Ethernet Console by exec\(cqing the \fBec\-drv\fR command\&.
+.sp
+After that is done, then it will arrange for \fBinit\fR to replace it as the INIT process, however, any processes spawned from that point on will have the PTY as its controlling terminal\&.
+.sp
+I/O from the PTY is then send to Ethernet Console Clients\&.
+.SH "OPTIONS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-e\fR\fIec\-drv\fR:: Path to the
+\fBec\-drv\fR
+command\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-i\fR\fIsecs\fR:: Disconnect sesions that have been inactive for more than
+\fIsecs\fR
+seconds\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-s\fR\fIshelf\fR:: Assign the
+\fIshelf\fR
+number to this
+\fBec\-drv\fR
+instance\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-v\fR:: Print version and exit\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-w\fR\fIsecs\fR:: The \-w flag takes an argument, the number of seconds to use as a timeout\&. This timeout defaults to 2, and governs how long to wait on probe, connection, and communication timeout\&. It must be greater than 0\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-\fR:: Use this to signal the end of
+\fBec\-drv\fR
+options and start of command line\&.
+.RE
+.SH "SEE ALSO"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+*cec(8)*
+.fi
+.if n \{\
+.RE
+.\}
+.SH "AUTHOR"
+.PP
+\fBA Liu Ly\fR
+.RS 4
+Author.
+.RE

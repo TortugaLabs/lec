@@ -1,0 +1,176 @@
+'\" t
+.\"     Title: cec
+.\"    Author: A Liu Ly
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2015-12-08
+.\"    Manual: System administration
+.\"    Source: cec.c 2.0
+.\"  Language: English
+.\"
+.TH "CEC" "8" "2015\-12\-08" "cec\&.c 2\&.0" "System administration"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cec \- Coraid Ethernet Console (Client)
+.SH "SYNOPSIS"
+.sp
+\fBcec\fR \fI[\-s shelf]\fR \fI[\-m mac]\fR \fIeth\fR
+.SH "DESCRIPTION"
+.sp
+The \fBcec\fR command uses raw sockets to connect to a CEC server for console access\&. All clients share the same session\&.
+.sp
+A \fBcec\fR process starts by probing the specified network interface (e\&.g\&., "eth0") for available CEC servers\&. If a cec server is specified using the \fB\-s\fR or \fB\-m\fR flags, the connection will proceed immediately upon discovery of the first CEC server matching the specification\&. Otherwise, a selection prompt will be displayed showing the discovered cec servers available for communication\&. Servers found on multiple destination mac addresses will be listed in a comma separated list as follows\&. If no servers are discovered, cec exits\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+:  SHELF | EA
+:  5       003048865F1E,003048865F1F
+:  [#qp]:
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The selection prompt accepts \&...
+.sp
+\fBshelf,\fR for the shelf number of the CEC server to connect to (from the first column)
+.sp
+\fBshelf\fR \fBea,\fR for the shelf and specific mac interface to connect to\&.
+.sp
+\fBp\fR directs \fBcec\fR to probe the interface again\&.
+.sp
+\fBq\fR directs \fBcec\fR to quit\&.
+.sp
+If a mac address is not specified, the first mac address listed for a shelf will be used\&.
+.sp
+Once connected to a cec server, entering the escape sequence will drop the user into an escape prompt where the user may type \fIq\fR to quit the connection, \fIi\fR to send the escape sequence across the connection, or \fI\&.\fR to continue the connection\&. The escape sequence is printed on connection\&.
+.SH "OPTIONS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-d\fR:: The \-d flag causes
+\fBcec\fR
+to output copious debugging information\&. Only for the strong of heart\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-e\fR:: The \-e flag takes an argument, a character e to be used as the base for the escape sequence, e\&.g\&., ^e\&. The character must be a\-y, inclusive\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-m\fR\fImac\fR:: The \-m flag takes an argument, the mac address of the desired CEC server\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-p\fR:: The \-p flag causes
+\fBcec\fR
+to probe the specified interface, print the list of discovered servers as formatted in the selection interface, and exit\&. The \-p flag also sets the \-q flag to make the output easier to parse in scripts\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-q\fR:: The \-q flag causes \efBcec\efP to operate in quiet mode, removing output letting the user know about actions being performed (probing, connecting, etc)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-s\fR\fIshelf\fR:: The \-s flag takes an argument, the shelf address of the desired CEC server\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-v\fR:: The \-v flag reports the cec version and exits\&.
+.PP
+\fB\-w\fR \fIsecs\fR
+.RS 4
+The \-w flag takes an argument, the number of seconds to use as a timeout\&. This timeout defaults to 2, and governs how long to wait on probe, connection, and communication timeout\&. It must be greater than 0\&.
+.RE
+.PP
+\fB\-?\fR
+.RS 4
+The \-? flag prints the cec usage and exits\&.
+.RE
+.RE
+.SH "NOTES"
+.sp
+The \fIcec\fR command must be run as root to obtain raw ethernet access\&.
+.sp
+If the \-s or \-m flags are used cec will exit upon closing the connection\&. Otherwise, cec will return to the selection prompt upon connection close\&.
+.sp
+Some say that \fBcec\fR is pronounced \fI"kick\&."\fR
+.SH "SEE ALSO"
+.sp
+\fBcecd(8)\fR
+.SH "AUTHORS"
+.sp
+Brantley Coile, Ed Cashin, Erik Quanstrom, Sam Hopkins
+.SH "AUTHOR"
+.PP
+\fBA Liu Ly\fR
+.RS 4
+Author.
+.RE

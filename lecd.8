@@ -1,0 +1,135 @@
+'\" t
+.\"     Title: lecd
+.\"    Author: A Liu Ly
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2015-12-08
+.\"    Manual: System administration
+.\"    Source: ec.c 2.0
+.\"  Language: English
+.\"
+.TH "LECD" "8" "2015\-12\-08" "ec\&.c 2\&.0" "System administration"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lecd \- Ethernet Console Daemon
+.SH "SYNOPSIS"
+.sp
+\fBlecd\fR \fI[options]\fR \fIeth\fR
+.SH "DESCRIPTION"
+.sp
+The \fBlecd\fR command uses raw sockets to present a CEC compatible server for console access\&.
+.sp
+A \fBlecd\fR starts by probing the specified network interface to either pick a free shelf number or check if the specified shelf number is not in use\&.
+.SH "OPTIONS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-d\fR:: The \-d flag causes
+\fBlecd\fR
+to output copious debugging information\&. Only for the strong of heart\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-i\fR\fIsecs\fR:: Disconnect sesions that have been inactive for more than
+\fIsecs\fR
+seconds\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-s\fR\fIshelf\fR:: Assign the
+\fIshelf\fR
+number to this
+\fBlecd\fR
+instance\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-v\fR:: Print version and exit\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-w\fR\fIsecs\fR:: The \-w flag takes an argument, the number of seconds to use as a timeout\&. This timeout defaults to 2, and governs how long to wait on probe, connection, and communication timeout\&. It must be greater than 0\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBcec(8)\fR
+.SH "AUTHORS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Alejandro Liu Ly
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+NCA code by James McKenzie\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBA Liu Ly\fR
+.RS 4
+Author.
+.RE

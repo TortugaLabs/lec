@@ -4,7 +4,7 @@ VERSION = 0.2.0
 OPTFLAGS = -g
 CFLAGS	= -Wall '-DVERSION="$(VERSION)"' $(OPTFLAGS)
 LDFLAGS	=  -g #-s
-EXES=lecd sled nca ec-drv cec
+EXES=lecd sled nca ecdrv cec
 
 HFILES=cec.h
 COMMON=system.o utils.o cec-common.o
@@ -12,7 +12,7 @@ COMMON=system.o utils.o cec-common.o
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 SBINDIR=$(PREFIX)/sbin
-MANDIR=$(PREFIX)/man
+MANDIR=$(PREFIX)/share/man
 
 all: $(EXES)
 
@@ -25,7 +25,7 @@ sled: sled.o $(COMMON)
 nca:	nca.o nca-main.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
-ec-drv:	ec-drv.o $(COMMON)
+ecdrv:	ec-drv.o $(COMMON)
 	$(CC) $(LDFLAGS) -o $@ $< $(COMMON)
 
 cec:	cec.o $(COMMON)
@@ -38,15 +38,30 @@ cec:	cec.o $(COMMON)
 .PHONY: clean install
 
 clean:
-	rm -rf *~ *.src.rpm TMP
+	rm -rf *~ *.rpm TMP *.o
 
 distclean:
 	rm -f *.o *~ *.t $(TARGETS) core *.rpm *.tar.gz *.log log.* $(EXES)
 	rm -rf TMP
 	type $(MKDIST) && rm -f *.[0-9] || :
 
+rpm:	all
+	rm -rf TMP
+	make PREFIX=/usr DESTDIR=$$(pwd)/TMP install
+	fpm -s dir -t rpm \
+		--name lec \
+		--version $(VERSION) \
+		--iteration 1 \
+		--license GPL,BSD2 \
+		--category "System Environment/Base" \
+		--maintainer "alejandro_liu@hotmail.com" \
+		--description "Linux Ethernet Console" \
+		--url "http://www.0ink.net/" \
+		-C TMP usr
+
 install: all
 	type $(MKDIST) && $(MKDIST) genman || :
+	mkdir -p $(DESTDIR)$(PREFIX)
 	for f in $(EXES) ; do \
 		install -D -m 755 $$f $(DESTDIR)$(SBINDIR)/$$f ; done
 
@@ -54,5 +69,5 @@ install: all
 	  for f in *.$$m ; do \
 	    [ ! -f $$f ] && continue ; \
 	    mkdir -p $(DESTDIR)$(MANDIR)/man$$m ; \
-	    cp -a $$f $(DESTDIR)$(MANDIR)/man$$m/$$f ; done ; done
-
+	    cp -a $$f $(DESTDIR)$(MANDIR)/man$$m/$$f ; \
+	    gzip -v $(DESTDIR)$(MANDIR)/man$$m/$$f ; done ; done

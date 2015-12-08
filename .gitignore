@@ -1,6 +1,7 @@
 *.o
+*.rpm
 cec
-ec-drv
+ecdrv
 lecd
 nca
 sled

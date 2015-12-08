@@ -1,0 +1,161 @@
+'\" t
+.\"     Title: nca
+.\"    Author: A Liu Ly
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2015-12-08
+.\"    Manual: System administration
+.\"    Source: nca-main.c 2.0
+.\"  Language: English
+.\"
+.TH "NCA" "8" "2015\-12\-08" "nca\-main\&.c 2\&.0" "System administration"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nca \- Network Console on Acid
+.SH "SYNOPSIS"
+.sp
+.nf
+nca _[\-1]_
+.fi
+.SH "DESCRIPTION"
+.sp
+nca connects a stdio to the console\(cqs virtual terminals (/dev/tty1\&...n) that are normally only accessible to someone with local keyboard access\&. It can only be run by the super user (more strictly, by a user that can read and write from /dev/vcs and /dev/tty*)\&.
+.sp
+It is particularly useful in conjunction with cecd(8) since it then provides remote console access; with some appropriate system start up scripts, nca can be started immediately the root filesystem has been mounted read\-only, providing a cheap, and only marginally inferior alternative to a serial console\&.
+.SH "OPTIONS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-1\fR
+Enable single run mode\&. (Disables =quit= option)\&.
+.RE
+.SH "USAGE"
+.sp
+When run as the super user, nca will connect your virtual terminal to /dev/tty1\&. Keypresses are sent to the terminal, and all changes to the screen are sent back to your terminal\&.
+.sp
+All additional functions are accessed by pressing CTRL\-a (\fIC\-a\fR hereafter) followed by one of the following:
+.sp
+C\-a can be send to the terminal by pressing it twice\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB<1\-9>\fR:: select virtual terminal 1\-9
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-/+\fR:: select the previous or next virtual terminal
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBR\fR:: hard\-reboot (after prompting for confirmation)\&. Note that this is direct call of the reboot system call, so disks will not be synced or unmounted\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBr\fR:: Executes the =/sbin/reboot= command\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBq\fR:: quit nca\&. This command is disabled by the
+\fB\-1\fR
+command line option\&.
+.RE
+.SH "BUGS"
+.sp
+To describe the error handling as crude would be to be very harsh on those programs that actually possess crude error handling\&. Errors are not so much handled as reported and ignored\&.
+.SH "AUTHORS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Written by James McKenzie\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Packaged by Julian Midgley\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Later modified by Alejandro Liu Ly\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBA Liu Ly\fR
+.RS 4
+Author.
+.RE

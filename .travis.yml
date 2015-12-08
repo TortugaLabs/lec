@@ -1,6 +1,6 @@
 #
 language: c
-script: make OPTFLAGS=-O2
+script: make OPTFLAGS=-O2 LDFLAGS=-s && make rpm
 compiler: gcc
 sudo: false
 

@@ -1,0 +1,153 @@
+'\" t
+.\"     Title: ecdrv
+.\"    Author: A Liu Ly
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 2015-12-08
+.\"    Manual: System administration
+.\"    Source: ec-drv.c 2.0
+.\"  Language: English
+.\"
+.TH "ECDRV" "8" "2015\-12\-08" "ec\-drv\&.c 2\&.0" "System administration"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ecdrv \- Linux Ethernet Console Driver
+.SH "SYNOPSIS"
+.sp
+ec\-drv \fI[options]\fR \fIeth\fR \fI[\-\-]\fR \fI[cmd\fR \fIcmd\fR \fIargs]\fR
+.SH "DESCRIPTION"
+.sp
+The \fBec\-drv\fR command uses raw sockets to present a CEC compatible server for access to a serial console\&. All clients share the same session\&.
+.sp
+A \fBec\-drv\fR starts by probing the specified network interface to either pick a free shelf number or check if the specified shelf number is not in use\&.
+.sp
+If a command was specified then \fBec\-drv\fR will spawn the specified command and wait for \fBcec\fR client sessions to connect\&. When that happens all the I/O is send between the client and the provided command\&.
+.sp
+If no command was specifed, it will simply forward all stdio to incoming client sessions\&.
+.SH "OPTIONS"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-d\fR:: The \-d flag causes
+\fBec\-drv\fR
+to output copious debugging information\&. Only for the strong of heart\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-i\fR\fIsecs\fR:: Disconnect sesions that have been inactive for more than
+\fIsecs\fR
+seconds\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-l\fR:: Enable local mode\&. The run command can be used interactively\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-s\fR\fIshelf\fR:: Assign the
+\fIshelf\fR
+number to this
+\fBec\-drv\fR
+instance\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-v\fR:: Print version and exit\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-w\fR\fIsecs\fR:: The \-w flag takes an argument, the number of seconds to use as a timeout\&. This timeout defaults to 2, and governs how long to wait on probe, connection, and communication timeout\&. It must be greater than 0\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-f\fR\fIoutput\fR:: When a USR1 signal is received, will write its shelfno and srcaddr to
+\fIoutput\fR
+file\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-\fR:: Use this to signal the end of
+\fBec\-drv\fR
+options and start of command line\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBcec(8)\fR
+.SH "AUTHOR"
+.PP
+\fBA Liu Ly\fR
+.RS 4
+Author.
+.RE
