@@ -1,5 +1,6 @@
 LEC - Linux Ethernet Console
 ============================
+[![Build Status](https://api.travis-ci.org/alejandroliu/lec.png?branch=master)](http://travis-ci.org/alejandroliu/lec)
 
 ```
  *   Copyright (C) 2009,2011 Alejandro Liu Ly

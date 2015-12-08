@@ -44,7 +44,6 @@ clean:
 distclean:
 	rm -f *.o *~ *.t $(TARGETS) core *.rpm *.tar.gz *.log log.* $(EXES)
 	rm -rf TMP
-	type $(MKDIST) && rm -f *.[0-9] || :
 
 rpm:	all
 	rm -rf TMP
@@ -59,10 +58,9 @@ rpm:	all
 		--maintainer "alejandro_liu@hotmail.com" \
 		--description "Linux Ethernet Console" \
 		--url "http://www.0ink.net/" \
-		-C TMP usr
+		-C TMP .
 
 install: all
-	type $(MKDIST) && $(MKDIST) genman || :
 	mkdir -p $(DESTDIR)$(PREFIX)
 	for f in $(EXES) ; do \
 		install -D -m 755 $$f $(DESTDIR)$(SBINDIR)/$$f ; done
