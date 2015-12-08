@@ -572,14 +572,13 @@ doloop(void)
 {
 	fd_set rfds;
 	char c;
-	int n, unacked = 0, retries, state;
+	int n, unacked = 0, retries;
 	uchar sndseq = 0, rcvseq = -1;
 	Pkt sndpkt, rcvpkt;
 	uchar ea[6];
 	struct timeval *tvp, timout;
 
 	memmove(ea, connp->ea, 6);
-	state = 0;
 	for (;;) {
 		FD_ZERO(&rfds);
 		FD_SET(netfd, &rfds);
